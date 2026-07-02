@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Flash — Музиката, която те следва</title>
+    <meta name="description" content="Хиляди песни на USB флашка за колата. Без интернет, без абонамент.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ── CURSOR GLOW ── -->
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- ── NAVBAR ── -->
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="#" class="logo">
+            <div class="logo-mark">
+                <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" stroke="url(#lg1)" stroke-width="2"/><path d="M11 10v12l10-6-10-6z" fill="url(#lg1)"/><defs><linearGradient id="lg1" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse"><stop stop-color="#0ea5ff"/><stop offset="1" stop-color="#00e5a0"/></linearGradient></defs></svg>
+            </div>
+            <span>Music<strong>Flash</strong></span>
+        </a>
+
+        <ul class="nav-links">
+            <li><a href="#how-it-works" class="nav-link">Как работи</a></li>
+            <li><a href="#genres" class="nav-link">Жанрове</a></li>
+            <li><a href="#pricing" class="nav-link">Цени</a></li>
+            <li><a href="#reviews" class="nav-link">Отзиви</a></li>
+            <li><a href="#faq" class="nav-link">Въпроси</a></li>
+        </ul>
+
+        <div class="nav-actions">
+            <a href="#order" class="btn-nav">Поръчай →</a>
+            <button class="burger" id="burger" onclick="toggleMenu()">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#how-it-works" onclick="toggleMenu()">Как работи</a>
+        <a href="#genres" onclick="toggleMenu()">Жанрове</a>
+        <a href="#pricing" onclick="toggleMenu()">Цени</a>
+        <a href="#reviews" onclick="toggleMenu()">Отзиви</a>
+        <a href="#faq" onclick="toggleMenu()">Въпроси</a>
+        <a href="#order" class="mobile-cta" onclick="toggleMenu()">Поръчай сега →</a>
+    </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" id="hero">
+    <canvas class="hero-canvas" id="heroCanvas"></canvas>
+    <div class="hero-noise"></div>
+
+    <div class="hero-inner">
+        <div class="hero-left">
+            <div class="hero-tag">
+                <span class="tag-dot"></span>
+                <span id="tagCounter">500+</span> доволни клиенти
+            </div>
+
+            <h1 class="hero-h1">
+                <span class="line-reveal">Твоята</span>
+                <span class="line-reveal delay-1">Музика.</span>
+                <span class="line-reveal delay-2 gradient-word">Навсякъде.</span>
+            </h1>
+
+            <p class="hero-desc">
+                Хиляди хита на USB флашка — от поп фолк до хаус, от летни хитове до класика.
+                Включи в колата. Слушай. <em>Без интернет. Без реклами.</em>
+            </p>
+
+            <div class="hero-btns">
+                <a href="#order" class="btn-primary">
+                    <span>Поръчай сега</span>
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <a href="#how-it-works" class="btn-outline">Вижте как работи</a>
+            </div>
+
+            <div class="hero-numbers">
+                <div class="h-num">
+                    <span class="h-n" data-target="1000">0</span><span class="h-u">+</span>
+                    <div class="h-l">Песни</div>
+                </div>
+                <div class="h-sep"></div>
+                <div class="h-num">
+                    <span class="h-n" data-target="15">0</span><span class="h-u">+</span>
+                    <div class="h-l">Жанра</div>
+                </div>
+                <div class="h-sep"></div>
+                <div class="h-num">
+                    <span class="h-n" data-target="0">€0</span>
+                    <div class="h-l">Абонамент</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-right">
+            <div class="app-card">
+                <div class="app-card-inner">
+                    <div class="ac-top">
+                        <div class="ac-dots"><span></span><span></span><span></span></div>
+                        <span class="ac-title">Music Flash</span>
+                        <span class="ac-badge">▶ Свири</span>
+                    </div>
+                    <div class="ac-now-playing">
+                        <div class="ac-vinyl">
+                            <div class="vinyl-inner"></div>
+                        </div>
+                        <div class="ac-np-info">
+                            <div class="ac-np-title" id="npTitle">Лятна нощ 2026</div>
+                            <div class="ac-np-artist" id="npArtist">Летни Хитове</div>
+                            <div class="ac-progress-bar"><div class="ac-progress-fill"></div></div>
+                            <div class="ac-time"><span>1:24</span><span>3:47</span></div>
+                        </div>
+                    </div>
+                    <div class="ac-genres">
+                        <span class="ac-g active">Летни</span>
+                        <span class="ac-g">Поп Фолк</span>
+                        <span class="ac-g">Хаус</span>
+                        <span class="ac-g">Рап</span>
+                        <span class="ac-g">R&B</span>
+                    </div>
+                    <div class="ac-tracks">
+                        <div class="ac-track"><div class="act-num">1</div><div class="act-info"><div class="act-t">Havana</div><div class="act-a">Camila Cabello</div></div><div class="act-d">3:37</div></div>
+                        <div class="ac-track playing"><div class="act-eq"><span></span><span></span><span></span></div><div class="act-info"><div class="act-t">Despacito</div><div class="act-a">Luis Fonsi</div></div><div class="act-d">3:47</div></div>
+                        <div class="ac-track"><div class="act-num">3</div><div class="act-info"><div class="act-t">Blinding Lights</div><div class="act-a">The Weeknd</div></div><div class="act-d">3:20</div></div>
+                        <div class="ac-track"><div class="act-num">4</div><div class="act-info"><div class="act-t">Shape of You</div><div class="act-a">Ed Sheeran</div></div><div class="act-d">3:54</div></div>
+                    </div>
+                </div>
+                <div class="app-card-glow"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero-scroll"><div class="scroll-line"></div><span>Превърти</span></div>
+</section>
+
+<!-- ── MARQUEE STRIP ── -->
+<div class="marquee-strip">
+    <div class="marquee-track">
+        <span>🎵 Поп Фолк</span><span>🌊 House</span><span>☀️ Летни Хитове</span><span>👑 Hip-Hop</span><span>🌴 Reggae</span><span>🌶️ Latin</span><span>🎤 БГ Рап</span><span>🎶 R&amp;B</span><span>🎸 Rock</span><span>🎷 Jazz</span><span>🎭 Естрада</span><span>🥂 Маса</span>
+        <span>🎵 Поп Фолк</span><span>🌊 House</span><span>☀️ Летни Хитове</span><span>👑 Hip-Hop</span><span>🌴 Reggae</span><span>🌶️ Latin</span><span>🎤 БГ Рап</span><span>🎶 R&amp;B</span><span>🎸 Rock</span><span>🎷 Jazz</span><span>🎭 Естрада</span><span>🥂 Маса</span>
+    </div>
+</div>
+
+<!-- ── HOW IT WORKS ── -->
+<section class="section" id="how-it-works">
+    <div class="container">
+        <div class="section-header">
+            <div class="s-label">Лесно като 1-2-3</div>
+            <h2>Как работи <span class="gradient-word">Music Flash?</span></h2>
+            <p>Никаква техническа грамотност не е нужна. Само три стъпки.</p>
+        </div>
+
+        <div class="steps-grid">
+            <div class="step reveal">
+                <div class="step-glow step-glow-1"></div>
+                <div class="step-number">01</div>
+                <div class="step-emoji">📦</div>
+                <h3>Поръчваш</h3>
+                <p>Избираш пакет, жанрове и количество. Попълваш формата — ние зареждаме флашката с хиляди хита.</p>
+            </div>
+            <div class="step-connector">
+                <svg viewBox="0 0 80 24" fill="none"><path d="M0 12 Q20 4 40 12 Q60 20 80 12" stroke="url(#sc)" stroke-width="2" stroke-dasharray="6 4"/><defs><linearGradient id="sc" x1="0" y1="0" x2="80" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#0ea5ff"/><stop offset="1" stop-color="#00e5a0"/></linearGradient></defs></svg>
+            </div>
+            <div class="step reveal">
+                <div class="step-glow step-glow-2"></div>
+                <div class="step-number">02</div>
+                <div class="step-emoji">🎵</div>
+                <h3>Получаваш</h3>
+                <p>Флашката пристига заредена с песните ти, наредени в папки по жанрове. Никаква настройка не е нужна.</p>
+            </div>
+            <div class="step-connector">
+                <svg viewBox="0 0 80 24" fill="none"><path d="M0 12 Q20 4 40 12 Q60 20 80 12" stroke="url(#sc2)" stroke-width="2" stroke-dasharray="6 4"/><defs><linearGradient id="sc2" x1="0" y1="0" x2="80" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#00e5a0"/><stop offset="1" stop-color="#f0b429"/></linearGradient></defs></svg>
+            </div>
+            <div class="step reveal">
+                <div class="step-glow step-glow-3"></div>
+                <div class="step-number">03</div>
+                <div class="step-emoji">🚗</div>
+                <h3>Слушаш</h3>
+                <p>Включваш в USB порта на колата и се наслаждаваш. Без интернет, без реклами, без прекъсвания.</p>
+            </div>
+        </div>
+
+        <div class="update-box reveal">
+            <div class="ub-left">
+                <div class="s-label">Иновацията</div>
+                <h3>Новите хитове идват при теб</h3>
+                <p>Всеки месец добавяме нови хитове в облака. Включваш флашката в компютъра, пускаш Music Flash Sync и натискаш един бутон. Новите песни се изтеглят автоматично.</p>
+                <div class="ub-steps">
+                    <div class="ubs"><div class="ubs-icon">💻</div><span>Включи флашката в компютъра</span></div>
+                    <div class="ubs"><div class="ubs-icon">▶️</div><span>Стартирай <strong>MusicFlash_Sync.exe</strong></span></div>
+                    <div class="ubs"><div class="ubs-icon">☁️</div><span>Натисни „Сканирай за нови песни"</span></div>
+                    <div class="ubs"><div class="ubs-icon">🚗</div><span>Върни флашката в колата и се наслаждавай</span></div>
+                </div>
+            </div>
+            <div class="ub-right">
+                <div class="sync-visual">
+                    <div class="sv-screen">
+                        <div class="sv-top">🎵 Music Flash Sync</div>
+                        <div class="sv-status">☁️ Намерени 12 нови хита!</div>
+                        <div class="sv-bar"><div class="sv-fill"></div></div>
+                        <div class="sv-tracks">
+                            <div class="svt">✓ Lato 2026 — Plovdiv Sound</div>
+                            <div class="svt">✓ Blinding Lights — Remix</div>
+                            <div class="svt syncing">⬇ Черно море — BG Mix...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── GENRES ── -->
+<section class="section section-dark" id="genres">
+    <div class="container">
+        <div class="section-header">
+            <div class="s-label">Богата колекция</div>
+            <h2>Музика за <span class="gradient-word">всеки вкус</span></h2>
+            <p>15+ жанра, стотици изпълнители, хиляди песни.</p>
+        </div>
+        <div class="genre-mosaic">
+            <div class="gm-card gm-large reveal">
+                <img src="assets/cover_balkan.png" alt="Поп Фолк">
+                <div class="gm-overlay"><h4>Поп Фолк</h4><p>BG · GR · SR · RO</p></div>
+            </div>
+            <div class="gm-col">
+                <div class="gm-card reveal">
+                    <img src="assets/cover_summer.png" alt="Летни Хитове">
+                    <div class="gm-overlay"><h4>Летни Хитове</h4><p>Reggae · Latin · Pop</p></div>
+                </div>
+                <div class="gm-card reveal">
+                    <img src="assets/cover_club.png" alt="Клубна">
+                    <div class="gm-overlay"><h4>Клубна Музика</h4><p>House · EDM · Dance</p></div>
+                </div>
+            </div>
+            <div class="gm-card reveal">
+                <img src="assets/cover_hiphop.png" alt="Хип-Хоп">
+                <div class="gm-overlay"><h4>Хип-Хоп и Рап</h4><p>Hip-Hop · R&amp;B · БГ Рап</p></div>
+            </div>
+        </div>
+        <div class="genre-pills-row">
+            <div class="gpr">🥂 Песни за маса</div><div class="gpr">🎙️ Естрада</div>
+            <div class="gpr">🌴 Reggae</div><div class="gpr">🌶️ Latin</div>
+            <div class="gpr">🎸 Rock</div><div class="gpr">🎷 Jazz & Blues</div>
+            <div class="gpr">🎻 Класическа</div><div class="gpr">+ още...</div>
+        </div>
+    </div>
+</section>
+
+<!-- ── PRICING ── -->
+<section class="section" id="pricing">
+    <div class="container">
+        <div class="section-header">
+            <div class="s-label">Прозрачни цени</div>
+            <h2>Избери своя <span class="gradient-word">пакет</span></h2>
+            <p>Еднократно плащане. Без скрити такси. Без абонамент.</p>
+        </div>
+        <div class="pricing-row">
+
+            <div class="price-card reveal">
+                <div class="pc-head">
+                    <div class="pc-icon">📲</div>
+                    <div><h3>Дигитален</h3><p>Само приложение + достъп</p></div>
+                </div>
+                <div class="pc-price"><span class="pc-amount">4.99</span><span class="pc-cur">€/мес.</span></div>
+                <div class="pc-note">или €39.99/год. · спестяваш 33%</div>
+                <ul class="pc-list">
+                    <li>✓ Music Flash Sync приложение</li>
+                    <li>✓ Облачни обновления всеки месец</li>
+                    <li>✓ Всички жанрове</li>
+                    <li class="dim">✗ Физическа USB флашка</li>
+                </ul>
+                <a href="#order" class="pc-btn pc-btn-outline" data-pkg="digital">Абонирай се</a>
+            </div>
+
+            <div class="price-card reveal">
+                <div class="pc-head">
+                    <div class="pc-icon">🎵</div>
+                    <div><h3>Старт</h3><p>32GB флашка + 500 песни</p></div>
+                </div>
+                <div class="pc-price"><span class="pc-amount">19</span><span class="pc-cur">€</span></div>
+                <div class="pc-note">еднократно плащане</div>
+                <ul class="pc-list">
+                    <li>✓ 32GB USB флашка</li>
+                    <li>✓ 500 предварително заредени песни</li>
+                    <li>✓ 5 жанра по избор</li>
+                    <li>✓ 3 месеца обновления</li>
+                </ul>
+                <a href="#order" class="pc-btn pc-btn-outline" data-pkg="start">Поръчай</a>
+            </div>
+
+            <div class="price-card popular reveal">
+                <div class="pc-popular-tag">⭐ Най-популярен</div>
+                <div class="pc-head">
+                    <div class="pc-icon">🔥</div>
+                    <div><h3>Стандарт</h3><p>64GB флашка + 1000 песни</p></div>
+                </div>
+                <div class="pc-price"><span class="pc-amount">29</span><span class="pc-cur">€</span></div>
+                <div class="pc-note">еднократно плащане</div>
+                <ul class="pc-list">
+                    <li>✓ 64GB USB флашка</li>
+                    <li>✓ 1000 предварително заредени песни</li>
+                    <li>✓ 10 жанра по избор</li>
+                    <li>✓ 6 месеца обновления</li>
+                </ul>
+                <a href="#order" class="pc-btn pc-btn-fill" data-pkg="standard">Поръчай</a>
+            </div>
+
+            <div class="price-card reveal">
+                <div class="pc-head">
+                    <div class="pc-icon">💎</div>
+                    <div><h3>Про</h3><p>128GB флашка + 2000+ песни</p></div>
+                </div>
+                <div class="pc-price"><span class="pc-amount">49</span><span class="pc-cur">€</span></div>
+                <div class="pc-note">еднократно плащане</div>
+                <ul class="pc-list">
+                    <li>✓ 128GB USB флашка</li>
+                    <li>✓ 2000+ предварително заредени песни</li>
+                    <li>✓ Всички жанрове</li>
+                    <li>✓ 12 месеца + VIP поддръжка</li>
+                </ul>
+                <a href="#order" class="pc-btn pc-btn-outline" data-pkg="pro">Поръчай</a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ── REVIEWS ── -->
+<section class="section section-dark" id="reviews">
+    <div class="container">
+        <div class="section-header">
+            <div class="s-label">Реални хора</div>
+            <h2>Какво казват <span class="gradient-word">клиентите</span></h2>
+        </div>
+        <div class="reviews-row">
+            <div class="review reveal">
+                <div class="rv-stars">★★★★★</div>
+                <p>„Включих флашката в колата и цялото семейство ме попита откъде е тази музика. Различни жанрове за всеки — деца, родители, всички доволни."</p>
+                <div class="rv-author"><div class="rv-av">М</div><div><strong>Мартин К.</strong><span>Пловдив</span></div></div>
+            </div>
+            <div class="review reveal">
+                <div class="rv-stars">★★★★★</div>
+                <p>„Взех Про пакета и не съжалявам. 2000 песни, всички жанрове. Приложението за обновяване работи за 2 минути — лесно и бързо."</p>
+                <div class="rv-author"><div class="rv-av">Е</div><div><strong>Елена С.</strong><span>София</span></div></div>
+            </div>
+            <div class="review reveal">
+                <div class="rv-stars">★★★★★</div>
+                <p>„Шофирам по цял ден. Флашката с поп фолк и гръцки е перфектна. Качеството е страхотно, препоръчвам на всеки шофьор!"</p>
+                <div class="rv-author"><div class="rv-av">С</div><div><strong>Стефан Д.</strong><span>Варна</span></div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── ORDER ── -->
+<section class="section" id="order">
+    <div class="container">
+        <div class="section-header">
+            <div class="s-label">Готов си?</div>
+            <h2>Направи <span class="gradient-word">поръчка</span></h2>
+            <p>Попълни формата и ще се свържем с теб до 2 часа.</p>
+        </div>
+        <div class="order-shell">
+            <form id="orderForm" class="order-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Пълно Име *</label>
+                        <input type="text" id="name" placeholder="Иван Иванов" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Телефон *</label>
+                        <input type="tel" id="phone" placeholder="+359 88 888 8888" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Имейл</label>
+                        <input type="email" id="email" placeholder="ivan@example.com">
+                    </div>
+                    <div class="form-group" id="qty-group">
+                        <label>Брой флашки *</label>
+                        <select id="quantity">
+                            <option value="1">1 флашка</option>
+                            <option value="2">2 флашки</option>
+                            <option value="3">3 флашки</option>
+                            <option value="5">5 флашки</option>
+                            <option value="10+">10+ флашки (бизнес)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Пакет *</label>
+                    <div class="pkg-picker" id="pkgPicker">
+                        <label class="pkg-opt">
+                            <input type="radio" name="package" value="digital">
+                            <span class="pkg-face"><span class="pkg-emoji">📲</span><span class="pkg-name">Дигитален</span><span class="pkg-price">€4.99/мес.</span></span>
+                        </label>
+                        <label class="pkg-opt">
+                            <input type="radio" name="package" value="start">
+                            <span class="pkg-face"><span class="pkg-emoji">🎵</span><span class="pkg-name">Старт</span><span class="pkg-price">€19</span></span>
+                        </label>
+                        <label class="pkg-opt selected">
+                            <input type="radio" name="package" value="standard" checked>
+                            <span class="pkg-face"><span class="pkg-emoji">🔥</span><span class="pkg-name">Стандарт</span><span class="pkg-price">€29</span></span>
+                        </label>
+                        <label class="pkg-opt">
+                            <input type="radio" name="package" value="pro">
+                            <span class="pkg-face"><span class="pkg-emoji">💎</span><span class="pkg-name">Про</span><span class="pkg-price">€49</span></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Желани жанрове</label>
+                    <div class="genre-pick" id="genrePick">
+                        <label class="gp"><input type="checkbox" value="Поп Фолк (BG)"><span>🎭 Поп Фолк BG</span></label>
+                        <label class="gp"><input type="checkbox" value="Поп Фолк (GR)"><span>🎭 Поп Фолк GR</span></label>
+                        <label class="gp"><input type="checkbox" value="Поп Фолк (SR)"><span>🎭 Поп Фолк SR</span></label>
+                        <label class="gp"><input type="checkbox" value="Поп Фолк (RO)"><span>🎭 Поп Фолк RO</span></label>
+                        <label class="gp"><input type="checkbox" value="Летни Хитове"><span>☀️ Летни Хитове</span></label>
+                        <label class="gp"><input type="checkbox" value="Песни за Маса"><span>🥂 Песни за Маса</span></label>
+                        <label class="gp"><input type="checkbox" value="House"><span>💜 House</span></label>
+                        <label class="gp"><input type="checkbox" value="Dance & EDM"><span>⚡ Dance & EDM</span></label>
+                        <label class="gp"><input type="checkbox" value="Hip-Hop"><span>👑 Hip-Hop</span></label>
+                        <label class="gp"><input type="checkbox" value="БГ Рап"><span>🎤 БГ Рап</span></label>
+                        <label class="gp"><input type="checkbox" value="R&B"><span>🎶 R&B</span></label>
+                        <label class="gp"><input type="checkbox" value="Pop"><span>🌟 Pop</span></label>
+                        <label class="gp"><input type="checkbox" value="Reggae"><span>🌴 Reggae</span></label>
+                        <label class="gp"><input type="checkbox" value="Latin"><span>🌶️ Latin</span></label>
+                        <label class="gp"><input type="checkbox" value="Rock"><span>🎸 Rock</span></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Допълнителни желания</label>
+                    <textarea id="notes" rows="3" placeholder="Напр: повече гръцки изпълнители, конкретни имена и т.н."></textarea>
+                </div>
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    <span>Изпрати поръчката</span>
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                </button>
+                <div id="form-success" class="f-success" style="display:none">🎉 <strong>Изпратено!</strong> Ще се свържем с теб до 2 часа.</div>
+                <div id="form-error" class="f-error" style="display:none">⚠️ <span id="errMsg">Грешка. Опитай отново.</span></div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section class="section section-dark" id="faq">
+    <div class="container">
+        <div class="section-header">
+            <div class="s-label">Имаш въпроси?</div>
+            <h2>Отговори на <span class="gradient-word">честите въпроси</span></h2>
+        </div>
+        <div class="faq-grid">
+            <div class="faq-item reveal" onclick="toggleFaq(this)">
+                <div class="faq-q">С коя кола работи флашката? <span class="faq-icon">+</span></div>
+                <div class="faq-a">Работи с всяка кола с USB порт за медия (MP3). Включва 99% от автомобилите след 2008 г.</div>
+            </div>
+            <div class="faq-item reveal" onclick="toggleFaq(this)">
+                <div class="faq-q">Нужен ли е интернет в колата? <span class="faq-icon">+</span></div>
+                <div class="faq-a">Не. Музиката е на флашката. Интернет е нужен само при изтегляне на нови хитове от домашния компютър.</div>
+            </div>
+            <div class="faq-item reveal" onclick="toggleFaq(this)">
+                <div class="faq-q">Колко песни се събират? <span class="faq-icon">+</span></div>
+                <div class="faq-a">На 32GB — над 3000 MP3 файла. На 64GB — над 6000. На 128GB — над 12 000 песни с високо качество (192kbps).</div>
+            </div>
+            <div class="faq-item reveal" onclick="toggleFaq(this)">
+                <div class="faq-q">Как получавам новите хитове? <span class="faq-icon">+</span></div>
+                <div class="faq-a">Включваш флашката в компютъра, стартираш Music Flash Sync и натискаш „Сканирай". Новите песни се изтеглят автоматично за 2–3 минути.</div>
+            </div>
+            <div class="faq-item reveal" onclick="toggleFaq(this)">
+                <div class="faq-q">Мога ли да добавям собствени песни? <span class="faq-icon">+</span></div>
+                <div class="faq-a">Да! Флашката е стандартна USB — копираш каквото пожелаеш. Приложението ги разпознава автоматично.</div>
+            </div>
+            <div class="faq-item reveal" onclick="toggleFaq(this)">
+                <div class="faq-q">Какво е дигиталният пакет? <span class="faq-icon">+</span></div>
+                <div class="faq-a">За хора, които вече имат флашка. Получаваш приложението и достъп до новите хитове всеки месец — без физическа флашка от нас.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+    <div class="container footer-inner">
+        <div class="footer-brand">
+            <div class="footer-logo">
+                <svg viewBox="0 0 32 32" fill="none" width="28" height="28"><circle cx="16" cy="16" r="15" stroke="url(#flg)" stroke-width="2"/><path d="M11 10v12l10-6-10-6z" fill="url(#flg)"/><defs><linearGradient id="flg" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse"><stop stop-color="#0ea5ff"/><stop offset="1" stop-color="#00e5a0"/></linearGradient></defs></svg>
+                Music<strong>Flash</strong>
+            </div>
+            <p>Музиката, която те следва навсякъде.</p>
+        </div>
+        <div class="footer-links">
+            <a href="#how-it-works">Как работи</a>
+            <a href="#pricing">Цени</a>
+            <a href="#order">Поръчай</a>
+            <a href="#faq">Въпроси</a>
+        </div>
+        <p class="footer-copy">© 2026 Music Flash · Всички права запазени.</p>
+    </div>
+</footer>
+
+<!-- ── MOBILE BOTTOM NAV ── -->
+<nav class="bottom-nav" id="bottomNav">
+    <a href="#hero" class="bn-item active" data-section="hero">
+        <div class="bn-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        </div>
+        Начало
+    </a>
+    <a href="#genres" class="bn-item" data-section="genres">
+        <div class="bn-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="18" r="3"/><circle cx="18" cy="15" r="3"/><path d="M12 18V7l9-3v4"/></svg>
+        </div>
+        Музика
+    </a>
+    <a href="#pricing" class="bn-item" data-section="pricing">
+        <div class="bn-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        </div>
+        Цени
+    </a>
+    <a href="#faq" class="bn-item" data-section="faq">
+        <div class="bn-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17" stroke-width="3" stroke-linecap="round"/></svg>
+        </div>
+        FAQ
+    </a>
+</nav>
+
+<!-- ── FLOATING ACTION BUTTON ── -->
+<a href="#order" class="fab" id="fab" title="Поръчай сега">
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+</a>
+
+<script src="script.js"></script>
+</body>
+</html>
