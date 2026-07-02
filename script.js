@@ -3,7 +3,7 @@
 // ════════════════════════════════════════
 
 const SUPABASE_URL = 'https://iopwawtryvvisnynxovb.supabase.co';
-const SUPABASE_ANON_KEY = ''; // TODO: add anon key
+const SUPABASE_ANON_KEY = 'sb_publishable_1xwPYlArEKCtLB03chrUAA_MM6t-2mH';
 
 // ── Mobile Bottom Nav Active State ──────────────────────
 const sections = ['hero','how-it-works','genres','pricing','reviews','order','faq'];
