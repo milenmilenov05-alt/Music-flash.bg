@@ -387,27 +387,55 @@ document.getElementById('orderForm').addEventListener('submit', async e => {
             },
             body: JSON.stringify(order)
         });
-        if (!res.ok) throw new Error();
-
+        
+        let finalRes = res;
+        if (!res.ok) {
+            const errText = await res.text();
+            console.error('Supabase Error:', errText);
+            if (errText.includes('Could not find the column')) {
+                delete order.duration_months;
+                delete order.total_price;
+                const fallbackRes = await fetch(`${SUPABASE_URL}/rest/v1/orders`, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'return=representation'
+                    },
+                    body: JSON.stringify(order)
+                });
+                if (!fallbackRes.ok) throw new Error(await fallbackRes.text());
+                finalRes = fallbackRes;
+            } else {
+                throw new Error(errText);
+            }
+        }
         // ── AUTOMATED EMAIL SENDING (if digital/free and email provided) ──
         if (isDigital && email) {
             let licenseKey = 'Очаквайте ключа си скоро.';
             try {
-                const data = await res.json();
+                const data = await finalRes.json();
                 if (data && data[0]) {
                     licenseKey = data[0].license_key || licenseKey;
                 }
             } catch(e) { console.log('No JSON returned from Supabase'); }
 
-            emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
-                to_email: email,
-                to_name: name,
-                package_name: pkg === 'free' ? '14-Дневен Тест' : 'Дигитален Абонамент',
-                license_key: licenseKey
-            }).then(
-                () => console.log("Имейлът с ключа е изпратен успешно!"),
-                (err) => console.error("Грешка при изпращане на имейл:", err)
-            );
+            try {
+                if (typeof emailjs !== 'undefined') {
+                    emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+                        to_email: email,
+                        to_name: name,
+                        package_name: pkg === 'free' ? '14-Дневен Тест' : 'Дигитален Абонамент',
+                        license_key: licenseKey
+                    }).then(
+                        () => console.log("Имейлът с ключа е изпратен успешно!"),
+                        (err) => console.error("Грешка при изпращане на имейл:", err)
+                    );
+                }
+            } catch(e) {
+                console.error("EmailJS error:", e);
+            }
         }
 
         document.getElementById('form-success').style.display = 'block';
@@ -417,8 +445,9 @@ document.getElementById('orderForm').addEventListener('submit', async e => {
         pkgOpts.forEach(o => o.classList.remove('selected'));
         document.querySelector('.pkg-opt:nth-child(3)')?.classList.add('selected');
         qtyGroup.style.display = '';
-    } catch {
-        showError('Временен проблем. Обади се директно или опитай отново.');
+    } catch (err) {
+        console.error(err);
+        showError('Временен проблем с базата данни. Опитайте отново или се обадете.');
     }
 
     btn.disabled = false;
