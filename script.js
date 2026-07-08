@@ -202,11 +202,11 @@ pkgRadios.forEach(r => {
         const addrGroup = document.getElementById('address-group');
         const revolutBlock = document.getElementById('revolut-block');
         const durationGroup = document.getElementById('duration-group');
-        if (r.value === 'digital') {
+        if (r.value === 'digital' || r.value === 'free') {
             qtyGroup.style.display = 'none';
             if(addrGroup) addrGroup.style.display = 'none';
             if(revolutBlock) revolutBlock.style.display = 'block';
-            if(durationGroup) durationGroup.style.display = 'block';
+            if(durationGroup) durationGroup.style.display = (r.value === 'digital') ? 'block' : 'none';
         } else {
             qtyGroup.style.display = '';
             if(addrGroup) addrGroup.style.display = '';
@@ -247,7 +247,10 @@ function updatePrice() {
     
     // Set limits based on package
     let labelNote = '';
-    if (pkgName === 'digital') {
+    if (pkgName === 'free') {
+        maxGenres = 1;
+        labelNote = '(Избери 1 жанр)';
+    } else if (pkgName === 'digital') {
         labelNote = '(2 включени безплатно, всеки следващ е +€1)';
     } else if (pkgName === 'start') {
         maxGenres = 5;
@@ -284,6 +287,9 @@ function updatePrice() {
         document.querySelector('.order-total-box').style.display = 'block';
         
         document.getElementById('totalPriceBreakdown').textContent = `Абонамент (${months} мес.): €${subCost.toFixed(2)} + Доп. жанрове: €${extraCost.toFixed(2)}`;
+    } else if (pkgName === 'free') {
+        document.querySelector('.order-total-box').style.display = 'block';
+        document.getElementById('totalPriceBreakdown').textContent = `Абонамент (14 Дни): Безплатно`;
     } else {
         // Physical packages hide the total_price_box since the price is fixed
         document.querySelector('.order-total-box').style.display = 'none';
@@ -327,7 +333,7 @@ document.getElementById('orderForm').addEventListener('submit', async e => {
     const phone    = document.getElementById('phone').value.trim();
     const email    = document.getElementById('email').value.trim();
     const pkg      = document.querySelector('input[name="package"]:checked')?.value;
-    const isDigital = pkg === 'digital';
+    const isDigital = (pkg === 'digital' || pkg === 'free');
     const quantity  = isDigital ? 'N/A (дигитален)' : (document.getElementById('quantity')?.value || '1');
     const gdpr     = document.getElementById('gdprCheck')?.checked;
     
@@ -366,7 +372,7 @@ document.getElementById('orderForm').addEventListener('submit', async e => {
         notes: notes || null, 
         status: 'new', 
         total_price: currentTotalPrice,
-        duration_months: isDigital ? parseInt(document.getElementById('subDuration').value, 10) : null,
+        duration_months: isDigital ? (pkg === 'free' ? 0.5 : parseInt(document.getElementById('subDuration').value, 10)) : null,
         created_at: new Date().toISOString() 
     };
 
@@ -377,11 +383,32 @@ document.getElementById('orderForm').addEventListener('submit', async e => {
                 'apikey': SUPABASE_ANON_KEY,
                 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
                 'Content-Type': 'application/json',
-                'Prefer': 'return=minimal'
+                'Prefer': 'return=representation'
             },
             body: JSON.stringify(order)
         });
         if (!res.ok) throw new Error();
+
+        // ── AUTOMATED EMAIL SENDING (if digital/free and email provided) ──
+        if (isDigital && email) {
+            let licenseKey = 'Очаквайте ключа си скоро.';
+            try {
+                const data = await res.json();
+                if (data && data[0]) {
+                    licenseKey = data[0].license_key || licenseKey;
+                }
+            } catch(e) { console.log('No JSON returned from Supabase'); }
+
+            emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+                to_email: email,
+                to_name: name,
+                package_name: pkg === 'free' ? '14-Дневен Тест' : 'Дигитален Абонамент',
+                license_key: licenseKey
+            }).then(
+                () => console.log("Имейлът с ключа е изпратен успешно!"),
+                (err) => console.error("Грешка при изпращане на имейл:", err)
+            );
+        }
 
         document.getElementById('form-success').style.display = 'block';
         document.getElementById('form-error').style.display = 'none';
@@ -971,6 +998,7 @@ document.getElementById('reviewForm').addEventListener('submit', async e => {
             body: JSON.stringify({ author: name, comment, rating: +rating, approved: false, created_at: new Date().toISOString() })
         });
         if (!res.ok) throw new Error();
+        
         document.getElementById('rv-success').style.display = 'block';
         document.getElementById('rv-error').style.display = 'none';
         document.getElementById('reviewForm').reset();

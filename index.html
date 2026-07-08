@@ -9,8 +9,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+       (function(){
+          // ВНИМАНИЕ: Замени "YOUR_PUBLIC_KEY" с твоя Public Key от EmailJS
+          emailjs.init("YOUR_PUBLIC_KEY");
+       })();
+    </script>
 </head>
 <body>
+
+<div class="bg-glow"></div>
 
 <!-- ── CURSOR GLOW ── -->
 <div class="cursor-glow" id="cursorGlow"></div>
@@ -22,7 +33,7 @@
             <div class="logo-mark">
                 <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" stroke="url(#lg1)" stroke-width="2"/><path d="M11 10v12l10-6-10-6z" fill="url(#lg1)"/><defs><linearGradient id="lg1" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse"><stop stop-color="#0ea5ff"/><stop offset="1" stop-color="#00e5a0"/></linearGradient></defs></svg>
             </div>
-            <span>Music<strong>Flash</strong></span>
+            <span>Music<strong style="color:var(--accent)">Flash</strong></span>
         </a>
 
         <ul class="nav-links">
@@ -186,7 +197,7 @@
                 <div class="step-number">04</div>
                 <div class="step-emoji">☁️</div>
                 <h3>Обновяваш с 1 клик</h3>
-                <p>Когато ти омръзне музиката, използваш нашия софтуер на компютъра си. Ръгаш флашката, софтуерът се свързва с облака ни и автоматично сваля и подрежда новите хитове за месеца!</p>
+                <p>Когато ти омръзне музиката, използваш нашия софтуер на компютъра си. Свързваш флашката, софтуерът се свързва с облака ни и автоматично сваля и подрежда новите хитове за месеца!</p>
             </div>
         </div>
 
@@ -229,21 +240,17 @@
         </div>
         <div class="genre-mosaic">
             <div class="gm-card gm-large reveal">
-                <img src="assets/cover_balkan.png" alt="Поп Фолк">
+                <img src="assets/genre_balkan_new.png" alt="Поп Фолк">
                 <div class="gm-overlay"><h4>Поп Фолк</h4><p>BG · GR · SR · RO</p></div>
             </div>
             <div class="gm-col">
                 <div class="gm-card reveal">
-                    <img src="assets/cover_summer.png" alt="Летни Хитове">
-                    <div class="gm-overlay"><h4>Летни Хитове</h4><p>Reggae · Latin · Pop</p></div>
-                </div>
-                <div class="gm-card reveal">
-                    <img src="assets/cover_club.png" alt="Клубна">
+                    <img src="assets/genre_club_new.png" alt="Клубна">
                     <div class="gm-overlay"><h4>Клубна Музика</h4><p>House · EDM · Dance</p></div>
                 </div>
             </div>
             <div class="gm-card reveal">
-                <img src="assets/cover_hiphop.png" alt="Хип-Хоп">
+                <img src="assets/genre_hiphop_new.png" alt="Хип-Хоп">
                 <div class="gm-overlay"><h4>Хип-Хоп и Рап</h4><p>Hip-Hop · R&amp;B · БГ Рап</p></div>
             </div>
         </div>
@@ -252,6 +259,28 @@
             <div class="gpr">🌴 Reggae</div><div class="gpr">🌶️ Latin</div>
             <div class="gpr">🎸 Rock</div><div class="gpr">🎷 Jazz & Blues</div>
             <div class="gpr">🎻 Класическа</div><div class="gpr">+ още...</div>
+        </div>
+    </div>
+</section>
+
+<!-- ── SEARCH / APP PREVIEW ── -->
+<section class="section" style="padding: 80px 0;">
+    <div class="container">
+        <div class="section-header" style="text-align:center;">
+            <h2>Открий своята 🎧 музика</h2>
+            <p>Търси по изпълнител, песен или жанр светкавично.</p>
+        </div>
+        <div class="search-ui" style="max-width: 600px; margin: 0 auto; background: #fff; border: 1px solid #eaeaea; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.05); overflow: hidden;">
+            <div class="sui-top" style="padding: 16px 20px; border-bottom: 1px solid #eaeaea; background: #f8fafd;">
+                <div class="sui-bar" style="display: flex; gap: 12px; background: #fff; border: 1px solid #eaeaea; border-radius: 8px; padding: 10px 14px;">
+                    <span class="sui-icon">🔍</span>
+                    <input type="text" placeholder="Търси 'Преслава', 'Устата' или 'Гръцко'..." disabled style="border:none; width:100%;">
+                </div>
+            </div>
+            <div class="sui-body" style="padding: 16px 20px; display: flex; flex-direction: column; gap: 8px;">
+                <div class="sui-track" style="display:flex; gap:16px; padding:12px; border-radius:8px; align-items:center; background:#f8fafd;"><div style="font-size:24px;">🎵</div><div style="flex:1;"><strong>Лъжа е</strong><br><span style="font-size:13px; color:#666;">Преслава</span></div></div>
+                <div class="sui-track" style="display:flex; gap:16px; padding:12px; border-radius:8px; align-items:center;"><div style="font-size:24px;">🎵</div><div style="flex:1;"><strong>50/50</strong><br><span style="font-size:13px; color:#666;">Устата</span></div></div>
+            </div>
         </div>
     </div>
 </section>
@@ -265,6 +294,22 @@
             <p>Всички пакети идват с <strong>2 месеца първоначално намаление!</strong></p>
         </div>
         <div class="pricing-row">
+
+            <div class="price-card reveal">
+                <div class="pc-head">
+                    <div class="pc-icon">🎁</div>
+                    <div><h3>Тест (14 Дни)</h3><p>Опитай безплатно</p></div>
+                </div>
+                <div class="pc-price"><span class="pc-amount">0.00</span><span class="pc-cur">€</span></div>
+                <div class="pc-note">Дигитален достъп</div>
+                <ul class="pc-list">
+                    <li>✓ 14 Дни пълноценно ползване</li>
+                    <li>✓ 1 Жанр по избор</li>
+                    <li>✓ Без кредитна карта</li>
+                    <li class="dim">✗ Без физическа флашка</li>
+                </ul>
+                <a href="#order" class="pc-btn pc-btn-outline" data-pkg="free">Тествай сега</a>
+            </div>
 
             <div class="price-card reveal">
                 <div class="pc-head">
@@ -361,13 +406,14 @@
         </div>
     </div>
 </section>
+
 <!-- ── REVIEW FORM ── -->
 <section class="section" id="write-review">
     <div class="container">
         <div class="section-header">
             <div class="s-label">Вашето мнение</div>
             <h2>Остави <span class="gradient-word">отзив</span></h2>
-            <p>Помогни на другите да изберат по-лесно — сподели експериенцията си!</p>
+            <p>Помогни на другите да изберат по-лесно — сподели впечатленията си!</p>
         </div>
         <div class="review-form-shell">
             <form id="reviewForm" class="order-form">
@@ -390,7 +436,7 @@
                 </div>
                 <div class="form-group">
                     <label>Коментар *</label>
-                    <textarea id="rv-comment" rows="4" placeholder="Разкажи ни за експериенцията си — каква музика слушаш, как работи в колата, дали би я попълваш..." required></textarea>
+                    <textarea id="rv-comment" rows="4" placeholder="Разкажи ни за впечатленията си — каква музика слушаш, как работи в колата, дали би я препоръчал..." required></textarea>
                 </div>
                 <button type="submit" class="submit-btn" id="rvSubmitBtn">
                     <span>Изпрати отзива</span>
@@ -469,6 +515,10 @@
                 <div class="form-group">
                     <label>Пакет *</label>
                     <div class="pkg-picker" id="pkgPicker">
+                        <label class="pkg-opt">
+                            <input type="radio" name="package" value="free" data-base="0">
+                            <span class="pkg-face"><span class="pkg-emoji">🎁</span><span class="pkg-name">Тест (14 Дни)</span><span class="pkg-price">Безплатно</span></span>
+                        </label>
                         <label class="pkg-opt">
                             <input type="radio" name="package" value="digital" data-base="4.99">
                             <span class="pkg-face"><span class="pkg-emoji">📲</span><span class="pkg-name">Дигитален</span><span class="pkg-price">€4.99/мес.</span></span>
@@ -598,8 +648,8 @@
             Ако имаш въпроси относно поръчката си или искаш да разбереш повече за Music Flash, не се колебай да ни потърсиш!
         </p>
         <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
-            <a href="tel:+359899000000" style="display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); padding: 12px 24px; border-radius: 8px; color: #fff; text-decoration: none; font-weight: 600; border: 1px solid var(--border);">📞 0899 000 000</a>
-            <a href="mailto:support@musicflash.bg" style="display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); padding: 12px 24px; border-radius: 8px; color: #fff; text-decoration: none; font-weight: 600; border: 1px solid var(--border);">✉️ support@musicflash.bg</a>
+            <a href="tel:+359899000000" style="display: flex; align-items: center; gap: 8px; background: var(--surface2); padding: 12px 24px; border-radius: 8px; color: var(--text); text-decoration: none; font-weight: 600; border: 1px solid var(--border);">📞 0899 000 000</a>
+            <a href="mailto:support@musicflash.bg" style="display: flex; align-items: center; gap: 8px; background: var(--surface2); padding: 12px 24px; border-radius: 8px; color: var(--text); text-decoration: none; font-weight: 600; border: 1px solid var(--border);">✉️ support@musicflash.bg</a>
         </div>
         <div style="margin-top: 32px; display: flex; gap: 16px; justify-content: center;">
             <a href="#" style="color: var(--muted); transition: color .2s;">Instagram</a> • 
