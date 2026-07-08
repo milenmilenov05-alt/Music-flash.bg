@@ -388,54 +388,10 @@ document.getElementById('orderForm').addEventListener('submit', async e => {
             body: JSON.stringify(order)
         });
         
-        let finalRes = res;
         if (!res.ok) {
             const errText = await res.text();
             console.error('Supabase Error:', errText);
-            if (errText.includes('Could not find the column')) {
-                delete order.duration_months;
-                delete order.total_price;
-                const fallbackRes = await fetch(`${SUPABASE_URL}/rest/v1/orders`, {
-                    method: 'POST',
-                    headers: {
-                        'apikey': SUPABASE_ANON_KEY,
-                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-                        'Content-Type': 'application/json',
-                        'Prefer': 'return=representation'
-                    },
-                    body: JSON.stringify(order)
-                });
-                if (!fallbackRes.ok) throw new Error(await fallbackRes.text());
-                finalRes = fallbackRes;
-            } else {
-                throw new Error(errText);
-            }
-        }
-        // ── AUTOMATED EMAIL SENDING (if digital/free and email provided) ──
-        if (isDigital && email) {
-            let licenseKey = 'Очаквайте ключа си скоро.';
-            try {
-                const data = await finalRes.json();
-                if (data && data[0]) {
-                    licenseKey = data[0].license_key || licenseKey;
-                }
-            } catch(e) { console.log('No JSON returned from Supabase'); }
-
-            try {
-                if (typeof emailjs !== 'undefined') {
-                    emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
-                        to_email: email,
-                        to_name: name,
-                        package_name: pkg === 'free' ? '14-Дневен Тест' : 'Дигитален Абонамент',
-                        license_key: licenseKey
-                    }).then(
-                        () => console.log("Имейлът с ключа е изпратен успешно!"),
-                        (err) => console.error("Грешка при изпращане на имейл:", err)
-                    );
-                }
-            } catch(e) {
-                console.error("EmailJS error:", e);
-            }
+            throw new Error(errText);
         }
 
         document.getElementById('form-success').style.display = 'block';
